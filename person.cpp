@@ -6,7 +6,7 @@ using std::cout;
 using std::endl;
 
 Person::Person(const char *name_, Person* father_, Person* mother_){
-    name = new char[strlen(name_)+1];
+	name = new char[strlen(name_)+1];
     strcpy(name, name_);
     father = father_;
     mother = mother_;
@@ -16,7 +16,12 @@ Person::Person(const char *name_, Person* father_, Person* mother_){
 }
 
 Person::~Person(){
+
+	/*for(int i = 0; i < numChildren; i++){
+		delete children[i];
+	}*/
     delete[] children;
+	delete [] name;
 }
 
 void Person::addChild(Person *newChild){
@@ -53,7 +58,7 @@ void Person::printLineage(char dir, int level){
         }
     }
 
-	delete temp;
+	delete[] temp;
 }
 
 /* helper function to compute the lineage
@@ -81,5 +86,14 @@ void expand(Person ***t, int *MAX){
   Person **temp = new Person*[2 * *MAX];
   memcpy(temp, *t, *MAX * sizeof(**t));
   *MAX *= 2;
+	/*for(int i = 0; i < sizeof(**t); i++){
+		delete [] *t[i];
+	}
+	delete [] *t;*/
+	delete[] *t;
   *t = temp;
+	/*for(int i = 0; i < *MAX; i++){
+		delete temp[i];
+	}
+	delete temp;*/
 }
